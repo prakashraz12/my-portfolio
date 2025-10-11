@@ -58,8 +58,9 @@ const HandsDirty = () => {
         One project is enough to make u, crazy on me!
       </p>
       <div className="grid gird-cols-2 lg:grid-cols-2 mt-8 gap-4">
-        {projects.map((project, index) => (
+        {projects.map((project) => (
           <Link
+          key={project.title}
             href={project.link}
             className="border rounded-2xl p-4 hover:shadow-md transition-all ease-linear duration-300 hover:bg-gradient-to-b from-blue-50 to-white"
           >

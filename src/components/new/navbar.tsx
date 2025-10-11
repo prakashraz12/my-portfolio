@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { Menu, Sparkle, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import Beam from "../ui/leaner-grident";
 import Link from "next/link";

@@ -1,4 +1,3 @@
-import ContactForm from "@/components/contact-form/contact-form.component";
 import { BackgroundBeamsDemo } from "@/components/new/hero-section";
 import Experience from "@/components/new/experince";
 import HandsDirty from "@/components/new/hands-dirty";

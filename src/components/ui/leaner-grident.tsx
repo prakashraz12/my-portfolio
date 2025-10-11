@@ -1,11 +1,13 @@
 import React, { useEffect, useRef } from "react";
 import { twMerge } from "tailwind-merge";
 
-const Beam = ({ className }: any) => {
-  const meteorRef = useRef<any>(null);
+const Beam = ({ className }: { className?: string }) => {
+  const meteorRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     const meteor = meteorRef.current;
+
+    if(!meteor) return;
 
     meteor.addEventListener("animationend", () => {
       meteor.style.visibility = "hidden";
@@ -33,9 +35,10 @@ const Beam = ({ className }: any) => {
   }, []);
   const restartAnimation = () => {
     const meteor = meteorRef.current;
+    if(!meteor) return;
     meteor.style.animation = "none";
     void meteor.offsetWidth;
-    meteor.style.animation = null;
+    meteor.style.animation = "";
   };
 
   return (

@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { BackgroundBeams } from "../ui/background-beams";
 import Image from "next/image";
 import {
   GITHUB_ACCOUNT,
@@ -14,7 +13,6 @@ import {
   InstagramLogoIcon,
   LinkedInLogoIcon,
 } from "@radix-ui/react-icons";
-import { NewBadge } from "../ui/new-badge";
 import { motion } from "framer-motion";
 
 export function BackgroundBeamsDemo() {
@@ -65,7 +63,7 @@ export function BackgroundBeamsDemo() {
                 animate="visible"
                 variants={fadeIn}
               >
-                I'm a developer from a business background, working at{" "}
+                I&lsquo;m a developer from a business background, working at{" "}
                 <motion.span className="inline-block bg-slate-100 dark:bg-slate-800 px-2 py-1  text-foreground font-medium">
                   <Link
                     href={"https://www.blacktech.com.np/"}

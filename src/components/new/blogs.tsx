@@ -1,6 +1,5 @@
 "use client";
 import Link from "next/link";
-import Image from "next/image";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { BlogPost } from "@/lib/types/types";
 import { fetchBlogPosts } from "@/lib/utils";
@@ -11,7 +10,6 @@ const MyBlogs = ()=>{
      const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
       const [lastDoc, setLastDoc] =
         useState<QueryDocumentSnapshot<DocumentData> | null>(null);
-      const [isLoading, setIsLoading] = useState(false);
       const [hasLoaded, setHasLoaded] = useState(false);
       const sectionRef = useRef<HTMLElement>(null);
     
@@ -19,7 +17,6 @@ const MyBlogs = ()=>{
     
       const loadBlogPosts = useCallback(async () => {
         if (hasLoaded) return;
-        setIsLoading(true);
         const { blogPosts: newPosts, lastVisibleDoc } = await fetchBlogPosts(
           pageSize,
           lastDoc
@@ -27,7 +24,6 @@ const MyBlogs = ()=>{
         setBlogPosts(newPosts);
         setLastDoc(lastVisibleDoc);
         setHasLoaded(true);
-        setIsLoading(false);
       }, [hasLoaded, lastDoc, pageSize]);
     
       useEffect(() => {
@@ -61,7 +57,7 @@ const MyBlogs = ()=>{
             <h1 className="text-2xl md:text-4xl bg-clip-text text-transparent bg-gradient-to-b from-neutral-500 to-neutral-600 font-sans font-bold">
                 Time to read! Watch my blogs
             </h1>
-            <p className="text-sm text-muted-foreground mt-3">I don't know what i wrote, but iam sure 100% authentic.</p>
+            <p className="text-sm text-muted-foreground mt-3">I do not know what i wrote, but iam sure 100% authentic.</p>
             {
                 blogPosts.map((post)=>(
                     <div key={post.slug} className="mt-4">
