@@ -1,6 +1,7 @@
 import { ChevronDown } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { GITHUB_ACCOUNT } from "../../../constant";
 
 const HandsDirty = () => {
   const projects = [
@@ -10,7 +11,7 @@ const HandsDirty = () => {
         "Byapar Sathi is a SaaS-based shop management system designed to help businesses efficiently manage customer credits, product stock, finance, sales, purchases, and inventory — all from one powerful platform.",
       image:
         "https://res.cloudinary.com/du1bbws62/image/upload/v1760102722/tkkxhaxkjvrlbewes06p.png",
-      link: "",
+      link: "https://byaparsathi.com/",
       tech: [
         "React vite",
         "Tailwind CSS",
@@ -95,7 +96,7 @@ const HandsDirty = () => {
         {loading()}
       </div>
       <div className="flex justify-center w-full mt-6">
-       <Link href={"/blog"} className="text-sm flex items-center transition-all ease-linear duration-300">
+       <Link href={GITHUB_ACCOUNT} className="text-sm flex items-center transition-all ease-linear duration-300">
        visit github <ChevronDown className="ml-2 h-4 w-4"/>
        </Link>
       </div>
