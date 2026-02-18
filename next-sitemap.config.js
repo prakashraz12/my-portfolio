@@ -1,9 +1,12 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: "https://prakashraz.com",
+  siteUrl: "https://www.prakashraz.com",
   generateRobotsTxt: true,
   robotsTxtOptions: {
-    policies: [{ userAgent: "*", allow: "/" }, {userAgent:"*", disallow:"/admin"}],
+    policies: [
+      { userAgent: "*", allow: "/" },
+      { userAgent: "*", disallow: "/admin" },
+    ],
   },
   exclude: ["/google-verification", "/_google-site-verification", "/admin"],
 };

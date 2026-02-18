@@ -7,7 +7,7 @@ User-agent: *
 Disallow: /admin
 
 # Host
-Host: https://prakashraz.com
+Host: https://www.prakashraz.com
 
 # Sitemaps
-Sitemap: https://prakashraz.com/sitemap.xml
+Sitemap: https://www.prakashraz.com/sitemap.xml
