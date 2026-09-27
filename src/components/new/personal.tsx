@@ -115,7 +115,7 @@ const sketches = [
 const Personal = () => {
   const [query, setQuery] = useState("");
   const [kind, setKind] = useState("All");
-  const kinds = ["All", ...new Set(favorites.map((item) => item.type))];
+  const kinds = ["All", ...Array.from(new Set(favorites.map((item) => item.type)))];
   const q = query.trim().toLowerCase();
   const shown = favorites.filter((item) => {
     const matchesKind = kind === "All" || item.type === kind;

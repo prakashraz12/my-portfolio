@@ -25,15 +25,11 @@ async function entries(collectionName: "blogs" | "project", prefix: string) {
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticPages: MetadataRoute.Sitemap = [
-    { path: "", priority: 1, changeFrequency: "weekly" },
-    { path: "/about", priority: 0.8, changeFrequency: "monthly" },
-    { path: "/blog", priority: 0.8, changeFrequency: "weekly" },
-    { path: "/project", priority: 0.8, changeFrequency: "monthly" },
-  ].map(({ path, priority, changeFrequency }) => ({
-    url: path ? `${SITE_URL}${path}` : SITE_URL,
-    changeFrequency,
-    priority,
-  }));
+    { url: SITE_URL, changeFrequency: "weekly", priority: 1 },
+    { url: `${SITE_URL}/about`, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${SITE_URL}/blog`, changeFrequency: "weekly", priority: 0.8 },
+    { url: `${SITE_URL}/project`, changeFrequency: "monthly", priority: 0.8 },
+  ];
 
   try {
     const [blogs, projects] = await Promise.all([
