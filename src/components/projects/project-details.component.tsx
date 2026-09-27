@@ -30,7 +30,7 @@ export default function ProjectDetails({
         <div className="relative w-full aspect-video mb-10">
           <Image
             src={projectPost.bannerImageUrl}
-            alt={`blog-image/${projectPost?.title}`}
+            alt={projectPost.title}
             fill
             className="object-cover rounded-lg mb-8"
           />

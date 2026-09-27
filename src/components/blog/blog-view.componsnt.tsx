@@ -26,7 +26,7 @@ export default function BlogPostDetail({ blogPost }: { blogPost: BlogPost }) {
         <div className="relative w-full aspect-video mb-10">
           <Image
             src={blogPost.bannerImageUrl}
-            alt={`blog-image/${blogPost?.title}`}
+            alt={blogPost.title}
             fill
             className="object-cover rounded-lg mb-8"
           />

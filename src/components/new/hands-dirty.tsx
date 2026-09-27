@@ -1,106 +1,67 @@
-import { ChevronDown } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
-import { GITHUB_ACCOUNT } from "../../../constant";
+import { LinkPreview } from "@/components/ui/link-preview";
+import cueposLogo from "@/assets/logo/cuepos.svg";
+import viewLogo from "@/assets/logo/view.svg";
+import sizzbeLogo from "@/assets/images/sizzbe.png";
+import restroxLogo from "@/assets/images/restrox.png";
+
+const work = [
+  {
+    title: "Cuepos.app",
+    description: "Club software for snooker and pool tables.",
+    href: "https://cuepos.app/",
+    logo: cueposLogo,
+  },
+  {
+    title: "Viewb.io",
+    description: "Link-in-bio pages for businesses and creators.",
+    href: "https://viewb.io/",
+    logo: viewLogo,
+  },
+  {
+    title: "RestroX",
+    description: "Restaurant POS for orders, sales, inventory, and staff.",
+    href: "https://www.restrox.com/",
+    logo: restroxLogo.src,
+  },
+  {
+    title: "Sizzbe",
+    description: "Real food, real places, and real experiences.",
+    href: "https://www.sizzbe.com/",
+    logo: sizzbeLogo.src,
+  },
+];
 
 const HandsDirty = () => {
-  const projects = [
-    {
-      title: "Byapar sathi",
-      description:
-        "Byapar Sathi is a SaaS-based shop management system designed to help businesses efficiently manage customer credits, product stock, finance, sales, purchases, and inventory — all from one powerful platform.",
-      image:
-        "https://res.cloudinary.com/du1bbws62/image/upload/v1760102722/tkkxhaxkjvrlbewes06p.png",
-      link: "https://byaparsathi.com/",
-      tech: [
-        "React vite",
-        "Tailwind CSS",
-        "Shadcn UI",
-        "TypeScript",
-        "Nest Js",
-        "My Sql",
-        "Cpanel",
-      ],
-    },
-  ];
-
-  const loading = () => {
-    return (
-      <div className="border rounded-2xl p-4 animate-pulse">
-        <div className="w-12 h-12 rounded-md bg-slate-200 dark:bg-slate-700" />
-
-        <div className="mt-4 space-y-3">
-          <div className="h-5 bg-slate-200 dark:bg-slate-700 rounded w-3/4" />
-
-          <div className="space-y-2 mt-3">
-            <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded w-full" />
-            <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded w-full" />
-            <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded w-2/3" />
-          </div>
-
-          <div className="flex gap-2 flex-wrap mt-6">
-            <div className="h-6 w-16 bg-slate-200 dark:bg-slate-700 rounded-full" />
-            <div className="h-6 w-20 bg-slate-200 dark:bg-slate-700 rounded-full" />
-            <div className="h-6 w-14 bg-slate-200 dark:bg-slate-700 rounded-full" />
-            <div className="h-6 w-14 bg-slate-200 dark:bg-slate-700 rounded-full" />
-            <div className="h-6 w-14 bg-slate-200 dark:bg-slate-700 rounded-full" />
-            <div className="h-6 w-14 bg-slate-200 dark:bg-slate-700 rounded-full" />
-          </div>
+  return (
+    <section id="work" className="mx-auto w-full max-w-5xl px-6 py-10">
+      <div className="mx-auto max-w-xl">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-neutral-600 dark:text-neutral-400">
+          Work
+        </p>
+        <div className="mt-4">
+          {work.map((project) => (
+            <LinkPreview
+              key={project.title}
+              url={project.href}
+              className="flex items-center gap-3 py-2"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={project.logo}
+                alt=""
+                className="h-5 w-5 shrink-0 rounded-sm object-contain"
+              />
+              <p className="min-w-0 truncate text-[15px]">
+                <span className="font-medium text-neutral-900 dark:text-neutral-100">
+                  {project.title}
+                </span>
+                <span className="text-neutral-400"> / {project.description}</span>
+              </p>
+            </LinkPreview>
+          ))}
         </div>
       </div>
-    );
-  };
-  return (
-    <div className="max-w-2xl mx-auto mt-12 px-4">
-      <h1 className="text-2xl md:text-4xl bg-clip-text text-transparent bg-gradient-to-b from-neutral-500 to-neutral-600 font-sans font-bold">
-        Hands Dirty, Projects!
-      </h1>
-      <p className="text-sm text-muted-foreground mt-3">
-        One project is enough to make u, crazy on me!
-      </p>
-      <div className="grid gird-cols-2 lg:grid-cols-2 mt-8 gap-4">
-        {projects.map((project) => (
-          <Link
-          key={project.title}
-            href={project.link}
-            className="border rounded-2xl p-4 hover:shadow-md transition-all ease-linear duration-300 hover:bg-gradient-to-b from-blue-50 to-white"
-          >
-            <div className="max-w-12 h-12 rounded-md">
-              <Image
-                src={project.image}
-                alt={project.title}
-                width={100}
-                height={100}
-              />
-            </div>
-            <div className="mt-4">
-              <h1 className="text-md font-semibold">{project.title}</h1>
-              <p className="text-sm text-muted-foreground mt-3 line-clamp-3">
-                {project.description}
-              </p>
-              <ul className="flex gap-2 flex-wrap mt-4">
-                {project.tech.map((tech, index) => (
-                  <li
-                    key={index}
-                    className="bg-slate-50 dark:bg-slate-800 rounded-full text-sm px-3 py-0.5  border text-muted-foreground"
-                  >
-                    {tech}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </Link>
-        ))}
-        {loading()}
-        {loading()}
-        {loading()}
-      </div>
-      <div className="flex justify-center w-full mt-6">
-       <Link href={GITHUB_ACCOUNT} className="text-sm flex items-center transition-all ease-linear duration-300">
-       visit github <ChevronDown className="ml-2 h-4 w-4"/>
-       </Link>
-      </div>
-    </div>
+    </section>
   );
 };
 

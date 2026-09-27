@@ -1,5 +1,6 @@
 import { Testimonial } from "@/lib/types/types";
 
+export const SITE_URL = "https://www.prakashraz.com";
 export const LIGHT_LOGO =
   "https://res.cloudinary.com/du1bbws62/image/upload/v1730345138/nakurirruzfzo8ykbdyl.png";
 export const DARK_LOGO =

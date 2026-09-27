@@ -1,114 +1,184 @@
 "use client";
-import React, { useEffect, useState } from "react";
+
+import { useEffect, useState } from "react";
 import Image from "next/image";
-import {
-  GITHUB_ACCOUNT,
-  HERO_IMg,
-  INSTAGRAM,
-  LINKED_IN,
-} from "../../../constant";
-import Link from "next/link";
-import {
-  GitHubLogoIcon,
-  InstagramLogoIcon,
-  LinkedInLogoIcon,
-} from "@radix-ui/react-icons";
-import { motion } from "framer-motion";
+import { EMAIL, HERO_IMg } from "../../../constant";
+import { BadgeCheck } from "lucide-react";
+import { LinkPreview } from "@/components/ui/link-preview";
+import { SquigglyText } from "@/components/ui/squiggly-text";
+import { ChromaticImage } from "@/components/ui/chromatic-image";
+import blacktechLogo from "@/assets/logo/blacktech.png";
+import cueposLogo from "@/assets/logo/cuepos.svg";
+import viewLogo from "@/assets/logo/view.svg";
+import BG from "@/assets/images/bg.png";
 
 export function BackgroundBeamsDemo() {
-  const [typedText, setTypedText] = useState("");
-  const fullText = "Coming soon...";
+  const [copied, setCopied] = useState(false);
+
+  const copyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(EMAIL);
+      setCopied(true);
+      return;
+    } catch {
+      const input = document.createElement("textarea");
+      input.value = EMAIL;
+      input.setAttribute("readonly", "");
+      input.style.position = "fixed";
+      input.style.left = "-9999px";
+      document.body.appendChild(input);
+      input.select();
+      const ok = document.execCommand("copy");
+      input.remove();
+      setCopied(ok);
+    }
+  };
 
   useEffect(() => {
-    let index = 0;
-    const timer = setInterval(() => {
-      if (index <= fullText.length) {
-        setTypedText(fullText.slice(0, index));
-        index++;
-      } else {
-        clearInterval(timer);
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key.toLowerCase() !== "c" || event.metaKey || event.ctrlKey || event.altKey) {
+        return;
       }
-    }, 150);
 
-    return () => clearInterval(timer);
+      const target = event.target as HTMLElement | null;
+      const tag = target?.tagName;
+      if (tag === "INPUT" || tag === "TEXTAREA" || target?.isContentEditable) {
+        return;
+      }
+
+      event.preventDefault();
+      copyEmail();
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
   }, []);
 
-  const fadeIn = {
-    hidden: { opacity: 0, y: 10 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6 },
-    },
-  };
+  useEffect(() => {
+    if (!copied) return;
+    const timer = window.setTimeout(() => setCopied(false), 1600);
+    return () => window.clearTimeout(timer);
+  }, [copied]);
+
   return (
-    <div className="h-[35rem] md:h-[30rem] w-full mb-12  bg-white relative flex flex-col items-center justify-end antialiased">
-      <div className="max-w-2xl  p-4">
-        <div className="flex  gap-10 relative z-10">
-          <div className="flex flex-col gap-2">
-            <h1 className=" text-lg md:text-4xl  bg-clip-text text-transparent bg-gradient-to-b from-neutral-500 to-neutral-600  font-sans font-bold">
-              Prakash Raz Shrestha
-            </h1>
-            <p className="text-neutral-500 max-w-lg  my-2 text-md relative z-10">
-              Buiding own SAAS app{" "}
-              <span className="bg-slate-50 font-semibold text-slate-900 px-2 py-1">
-                <Link href={"https://byaparsathi.com/"}>Byapar Sathi</Link>
-              </span>{" "}
-              and many more.
-            </p>
-            <div className="flex flex-col mt-4">
-              <motion.p
-                className="text-md leading-relaxed  text-foreground/80 max-w-2xl"
-                initial="hidden"
-                animate="visible"
-                variants={fadeIn}
-              >
-                I&lsquo;m a developer from a business background, working at{" "}
-                <motion.span className="inline-block bg-slate-100 dark:bg-slate-800 px-2 py-1  text-foreground font-medium">
-                  <Link
-                    href={"https://www.blacktech.com.np/"}
-                    target="_blank"
-                    className="text-semibold"
-                  >
-                    Black Tech
-                  </Link>
-                </motion.span>{" "}
-                focused on frontend development. Continuously learning DevOps,
-                scalable applications, and business skills,{" "}
-                <span className="text-muted-foreground  ">{typedText}</span>
-              </motion.p>
-            </div>
-            <div className="flex gap-4 mt-4">
-              <ul className="flex gap-3">
-                <li className="cursor-pointer">
-                  <Link href={LINKED_IN}>
-                    <LinkedInLogoIcon width="30" height="30" />
-                  </Link>
-                </li>
-                <li className="cursor-pointer">
-                  <Link href={INSTAGRAM}>
-                    <InstagramLogoIcon width="30" height="30" />
-                  </Link>
-                </li>
-                <li className="cursor-pointer">
-                  <Link href={GITHUB_ACCOUNT}>
-                    <GitHubLogoIcon width="30" height="30" />
-                  </Link>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div className="relative aspect-square">
-            <Image
-              src={HERO_IMg}
-              alt="prkashraz's profie photo"
-              width={400}
-              height={400}
-              className="object-contain rounded-md border"
-            />
-          </div>
+    <section className="mx-auto w-full max-w-5xl px-6 pb-4 pt-6">
+      <div className="mx-auto max-w-xl">
+        <div className="w-full">
+          <ChromaticImage
+            src={BG.src}
+            alt="Prakash Raz Shrestha"
+            className="h-[200px] w-full rounded-xl"
+          />
         </div>
+        <div className="relative h-16 w-16 -mt-10 ml-5">
+          <Image
+            src={HERO_IMg}
+            alt="Prakash Raz Shrestha"
+            fill
+            priority
+            className="rounded-xl object-cover object-top"
+            sizes="64px"
+          />
+          
+        </div>
+
+        <h1 className="mt-4 flex items-center gap-1 text-lg font-semibold tracking-tight">
+          Prakash Raz Shrestha
+          <BadgeCheck
+            size={16}
+            aria-label="Verified"
+            strokeWidth={3}
+            className="shrink-0 fill-blue-600 stroke-white"
+          />
+        </h1>
+
+        <div className="mt-2 space-y-4 text-[15px] leading-7 text-neutral-900 dark:text-neutral-100">
+          <p>
+            I&apos;m a <SquigglyText>frontend developer</SquigglyText> at ❤️ heart, tinkering with interfaces
+            and product code most of the time. I work at{" "}
+            <LinkPreview
+              url="https://www.blacktech.com.np/"
+              className="inline-flex items-center gap-1 font-semibold"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={blacktechLogo.src}
+                alt=""
+                className="h-3.5 w-3.5 rounded-[3px] object-cover dark:invert"
+              />
+              <span className="underline decoration-dotted underline-offset-4">
+                Black Tech
+              </span>
+            </LinkPreview>
+            , based in Nepal, and you can find me on{" "}
+            <a
+              href="https://viewb.io/prakashraz"
+              target="_blank"
+              rel="noreferrer"
+              className="font-semibold underline decoration-dotted underline-offset-4"
+            >
+              viewb.io/prakashraz
+            </a>
+            .
+          </p>
+          <p>
+            When I&apos;m not coding, I sketch, listen to music, and read.
+          </p>
+          <p>
+            I&apos;ve been building{" "}
+            <LinkPreview
+              url="https://cuepos.app/"
+              className="inline-flex items-center gap-1 font-semibold"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={cueposLogo}
+                alt=""
+                className="h-3.5 w-3.5 rounded-[3px] object-contain"
+              />
+              <span className="underline decoration-dotted underline-offset-4">
+                Cuepos.app
+              </span>
+            </LinkPreview>{" "}
+            and{" "}
+            <LinkPreview
+              url="https://viewb.io/"
+              className="inline-flex items-center gap-1 font-semibold"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={viewLogo}
+                alt=""
+                className="h-3.5 w-3.5 rounded-[3px] object-contain"
+              />
+              <span className="underline decoration-dotted underline-offset-4">
+                Viewb.io
+              </span>
+            </LinkPreview>{" "}
+            alongside that. Cuepos runs snooker and pool clubs. Viewb is
+            link-in-bio pages. My favourite thing is shipping the next small
+            piece of them.
+          </p>
+        </div>
+
+        <button
+          type="button"
+          onClick={copyEmail}
+          className="mt-6 inline-flex items-center gap-2 text-sm text-neutral-500 hover:text-neutral-800 dark:text-neutral-400 dark:hover:text-neutral-100"
+        >
+          {copied ? (
+            "Copied"
+          ) : (
+            <>
+              Press
+              <kbd className="rounded-md border border-neutral-200 bg-white px-1.5 py-0.5 text-xs font-medium text-neutral-700 shadow-[0_1px_0_rgba(0,0,0,0.04)] dark:border-white/15 dark:bg-[#1c1c1c] dark:text-neutral-200">
+                C
+              </kbd>
+              to copy my email
+            </>
+          )}
+        </button>
       </div>
-    </div>
+    </section>
   );
 }

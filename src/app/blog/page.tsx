@@ -1,24 +1,20 @@
+import type { Metadata } from "next";
 import BlogPage from "@/components/blog/blog";
-import React from "react";
 
-export async function generateMetadata() {
-  return {
-    title: "Blogs - Prakash Raz",
-    description:
-      "Prakash Raz Shrestha is a skilled developer with 1.5 years of experience in building web and mobile applications. Specializing in Next.js, React, and TypeScript, he is passionate about creating innovative solutions and enhancing user experiences.",
-    keywords: [
-      "Prakash Raz Shrestha",
-      "Developer",
-      "Web Development",
-      "Mobile Development",
-      "Next.js",
-      "React",
-      "TypeScript",
-      "Software Solutions",
-      "Online Learning Platform",
-    ],
-  };
-}
+const description =
+  "Writing by Prakash Raz Shrestha on frontend development, product, and building for the web.";
+
+export const metadata: Metadata = {
+  title: "Blog",
+  description,
+  alternates: { canonical: "/blog" },
+  openGraph: {
+    title: "Blog",
+    description,
+    url: "/blog",
+  },
+};
+
 const Page = () => {
   return <BlogPage />;
 };

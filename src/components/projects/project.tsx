@@ -36,12 +36,16 @@ const ProjectPage = () => {
   }, [projectPosts, loadProjectPosts]);
 
   return (
-    <div className="max-w-2xl mx-auto mt-32 px-4">
+    <div className="mx-auto w-full max-w-5xl px-6 pb-16 pt-12">
       {!isLoading && (
-        <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl mb-5 ml-4 md:ml-0">
-          Projects
-          <span className="inline-block w-24 h-[2px] bg-black ml-4 align-middle" />
-        </h2>
+        <div className="mb-10">
+          <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-neutral-400">
+            Work
+          </p>
+          <h1 className="mt-3 max-w-xl text-[15px] leading-7 text-neutral-800 dark:text-neutral-200">
+            Client and personal projects.
+          </h1>
+        </div>
       )}
       {isLoading && (
         <div className="flex justify-center">
@@ -50,8 +54,8 @@ const ProjectPage = () => {
       )}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6 mt-2">
         {projectPosts?.map((project, index) => (
-          <Link key={index} href={`/project/${project?.slug}`} className="border">
-            <>
+          <article key={project.slug || index} className="border">
+            <Link href={`/project/${project?.slug}`}>
               <div className="group relative aspect-video overflow-hidden border-b">
                 <Image
                   src={project?.bannerImageUrl}
@@ -60,27 +64,31 @@ const ProjectPage = () => {
                   className="object-cover transition-transform duration-300 group-hover:scale-105"
                 />
               </div>
-              <div className="mt-4 p-4">
-                <h3 className="mt-1 text-xl font-semibold hover:underline line-clamp-2">
+            </Link>
+            <div className="mt-4 p-4">
+              <Link href={`/project/${project?.slug}`}>
+                <h2 className="mt-1 text-xl font-semibold hover:underline line-clamp-2">
                   {project.title}
-                </h3>
-                <div className="mt-3 flex mb-2">
-                  <Link
-                    href={project?.project_link}
-                    className="underline flex items-center gap-2"
-                  >
-                    Watch Live <ExternalLink size={"17px"} />
-                  </Link>
-                </div>
-                <p className="line-clamp-3">{project.shortDescription}</p>
-                <div className="flex gap-3 flex-wrap mt-2">
-                  {project?.tech_stacks?.map((item, index) => (
-                    <Badge key={index}>{item}</Badge>
-                  ))}
-                </div>
+                </h2>
+              </Link>
+              {project?.project_link ? (
+                <a
+                  href={project.project_link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline mt-3 mb-2 flex items-center gap-2"
+                >
+                  Watch Live <ExternalLink size={"17px"} />
+                </a>
+              ) : null}
+              <p className="line-clamp-3">{project.shortDescription}</p>
+              <div className="flex gap-3 flex-wrap mt-2">
+                {project?.tech_stacks?.map((item, stackIndex) => (
+                  <Badge key={stackIndex}>{item}</Badge>
+                ))}
               </div>
-            </>
-          </Link>
+            </div>
+          </article>
         ))}
       </div>
     </div>

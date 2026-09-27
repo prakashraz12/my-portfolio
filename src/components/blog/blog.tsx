@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { Zap, LoaderCircle } from "lucide-react";
+import { LoaderCircle } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { DocumentData, QueryDocumentSnapshot } from "firebase/firestore";
 import { fetchBlogPosts, formatTimestamp } from "@/lib/utils";
@@ -42,15 +42,17 @@ export default function BlogPage() {
     return categories?.map((i) => (i.id === id ? i.title : ""));
   };
   return (
-    <div className="container mx-auto px-4 py-8 mt-20">
+    <div className="mx-auto w-full max-w-5xl px-6 pb-16 pt-12">
       <div className="flex justify-center items-center">
         {isLoading && <LoaderCircle size={"12rem"} className="animate-spin" />}
       </div>
       {!isLoading && (
-        <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl mb-2">
-          Blogs
-          <span className="inline-block w-24 h-[2px] bg-black ml-4 align-middle" />
-        </h2>
+        <div className="mb-10">
+          <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-neutral-400">
+            Writing
+          </p>
+          <h1 className="mt-3 text-base font-semibold">Notes from the work</h1>
+        </div>
       )}
       <div className="grid grid-cols-1 lg:grid-cols-4">
         <div>
@@ -82,76 +84,45 @@ export default function BlogPage() {
           />
         </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {blogPosts?.length > 0 && (
-          <Link
-            href={`/blog/${blogPosts[0]?.slug}`}
-            className="relative group aspect-[4/3] overflow-hidden  col-span-1 md:row-span-2"
-          >
-            <Image
-              src={blogPosts[0].bannerImageUrl}
-              alt={blogPosts[0].title}
-              className="object-cover group-hover:scale-105 transition-transform duration-300"
-              fill
-            />
-            <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-black/60" />
-            <div className="absolute top-4 left-4 right-4 flex justify-between items-start">
-              <span className="bg-black/80 text-white px-3 py-1 text-sm font-medium rounded">
-                {blogPosts[0]?.category &&
-                  getCategoryName(blogPosts[0]?.category)}
-              </span>
-              <Zap className="text-red-500 w-6 h-6" />
-            </div>
-            <div className="absolute bottom-4 left-4 right-4 text-white">
-              <div className="flex items-center gap-2 text-sm mb-2">
-                <span></span>
-                <span>•</span>
-                <span>{formatTimestamp(blogPosts[0]?.createdAt)}</span>
-              </div>
-              <h2 className="text-xl font-bold mb-2 line-clamp-2">
-                {blogPosts[0].title}
-              </h2>
-              <p className="line-clamp-3">{blogPosts[0]?.shortDescription}</p>
-            </div>
-          </Link>
-        )}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {blogPosts?.slice(1, 5).map((post, index) => (
+      {!isLoading && blogPosts.length > 0 && (
+        <div className="border-b border-[#1c1915]/15 dark:border-white/10">
+          {blogPosts.map((post, index) => (
             <Link
-              key={index}
-              href={`/blog/${post?.slug}`}
-              className="relative group aspect-[4/3] overflow-hidden "
+              key={post.slug}
+              href={`/blog/${post.slug}`}
+              className="group grid gap-4 border-t border-[#1c1915]/15 py-7 dark:border-white/10 md:grid-cols-12 md:items-center"
             >
-              <Image
-                src={post.bannerImageUrl}
-                alt={post.title}
-                className="object-cover group-hover:scale-105 transition-transform duration-300"
-                fill
-              />
-              <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-black/60" />
-              <div className="absolute top-4 left-4 right-4 flex justify-between items-start">
-                {post?.category && (
-                  <span className="bg-black/80 text-white px-3 py-1 text-sm font-medium rounded">
-                    {getCategoryName(post?.category)}
-                  </span>
+              <span className="text-xl text-[#8a8178] dark:text-neutral-500 md:col-span-1">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <div className="relative hidden aspect-[16/10] overflow-hidden bg-[#efeae1] dark:bg-white/5 md:col-span-3 md:block">
+                {post.bannerImageUrl && (
+                  <Image
+                    src={post.bannerImageUrl}
+                    alt=""
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
                 )}
-                <Zap className="text-red-500 w-6 h-6" />
               </div>
-              <div className="absolute bottom-4 left-4 right-4 text-white">
-                <div className="flex items-center gap-2 text-sm mb-2">
-                  <span>•</span>
-                  <span>{formatTimestamp(blogPosts[0]?.createdAt)}</span>
-                </div>
-                <h2 className="text-sm font-bold mb-2 line-clamp-2">
+              <div className="md:col-span-8">
+                <p className="text-xs uppercase tracking-[0.16em] text-[#8a8178] dark:text-neutral-500">
+                  {post.category ? getCategoryName(post.category) : "Note"}
+                  {post.createdAt ? ` · ${formatTimestamp(post.createdAt)}` : ""}
+                </p>
+                <h2 className="mt-2 text-2xl font-medium tracking-tight transition-colors group-hover:text-[#b4532a] md:text-3xl">
                   {post.title}
                 </h2>
-                <p className="line-clamp-2">{blogPosts[0]?.shortDescription}</p>
+                {post.shortDescription && (
+                  <p className="mt-2 line-clamp-2 max-w-2xl text-sm leading-relaxed text-[#6f675f] dark:text-neutral-400">
+                    {post.shortDescription}
+                  </p>
+                )}
               </div>
             </Link>
           ))}
         </div>
-      </div>
-      {!isLoading && <hr className="bg-slate-900 h-2" />}
+      )}
       {/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-2">
         {blogPosts?.slice(1).map((post, index) => (
           <Link

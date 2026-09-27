@@ -1,24 +1,20 @@
+import type { Metadata } from "next";
 import ProjectPage from "@/components/projects/project";
-import React from "react";
 
-export async function generateMetadata() {
-  return {
-    title: "Project - Prakash Raz",
-    description:
-      "Prakash Raz Shrestha is a skilled developer with 1.5 years of experience in building web and mobile applications. Specializing in Next.js, React, and TypeScript, he is passionate about creating innovative solutions and enhancing user experiences.",
-    keywords: [
-      "Prakash Raz Shrestha",
-      "Developer",
-      "Web Development",
-      "Mobile Development",
-      "Next.js",
-      "React",
-      "TypeScript",
-      "Software Solutions",
-      "Online Learning Platform",
-    ],
-  };
-}
+const description =
+  "Projects by Prakash Raz Shrestha, including product work and personal builds.";
+
+export const metadata: Metadata = {
+  title: "Projects",
+  description,
+  alternates: { canonical: "/project" },
+  openGraph: {
+    title: "Projects",
+    description,
+    url: "/project",
+  },
+};
+
 const Page = () => {
   return <ProjectPage />;
 };

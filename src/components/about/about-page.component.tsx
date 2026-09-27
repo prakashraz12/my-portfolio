@@ -65,7 +65,7 @@ const AnimatedSection = ({ children }: { children: any }) => {
 const RoadMap = ({ children }: { children: any }) => {
   return (
     <div className="relative">
-      <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gray-200 z-0"></div>
+      <div className="absolute left-1/2 z-0 h-full w-1 -translate-x-1/2 transform bg-gray-200 dark:bg-white/10"></div>
       {children}
     </div>
   );
@@ -100,7 +100,7 @@ const RoadNode = ({
       className={`flex items-center mb-8 ${isLeft ? "flex-row-reverse" : ""}`}
     >
       <div className={`flex-1 ${isLeft ? "text-right" : ""}`}>{children}</div>
-      <div className="w-12 h-12 rounded-full bg-blue-500 border-4 border-white flex items-center justify-center z-10">
+      <div className="z-10 flex h-12 w-12 items-center justify-center rounded-full border-4 border-[#f6f3ec] bg-[#1c1915]">
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
@@ -132,7 +132,7 @@ export default function EnhancedAboutPage() {
   ];
   return (
     <div className="min-h-screen">
-      <div className="container mx-auto px-4 py-16 mt-20">
+      <div className="mx-auto w-full max-w-5xl px-6 py-12">
         <div className="flex flex-col items-center justify-center mb-16">
           <AnimatedSection>
             <motion.div
@@ -142,7 +142,7 @@ export default function EnhancedAboutPage() {
             >
               <Image
                 src="https://res.cloudinary.com/du1bbws62/image/upload/v1730027930/cblzc2dpjfpcipufopva.jpg"
-                alt="Prakash raz's profile image"
+                alt="Prakash Raz Shrestha"
                 layout="fill"
                 objectFit="cover"
               />
@@ -150,14 +150,14 @@ export default function EnhancedAboutPage() {
           </AnimatedSection>
           <AnimatedSection>
             <div className="max-w-lg text-center md:text-left">
-              <motion.h2
-                className="text-2xl font-semibold mb-4"
+              <motion.h1
+                className="mb-4 text-4xl font-medium tracking-tight"
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
               >
                 Prakash Shrestha
-              </motion.h2>
+              </motion.h1>
               <p>rzprakash16@gmail.com</p>
               <div className="flex flex-wrap gap-2 mb-4 mt-5">
                 {sections.map((section) => (
@@ -166,7 +166,7 @@ export default function EnhancedAboutPage() {
                     className={`px-4 py-2 rounded-full text-sm font-medium ${
                       activeSection === section.id
                         ? "bg-slate-900 text-white"
-                        : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                        : "bg-gray-200 text-gray-700 dark:text-neutral-300 hover:bg-gray-300"
                     }`}
                     onClick={() => setActiveSection(section.id)}
                     whileHover={{ scale: 1.05 }}
@@ -186,7 +186,7 @@ export default function EnhancedAboutPage() {
                   transition={{ duration: 0.3 }}
                 >
                   {activeSection === "whoIAm" && (
-                    <p className="text-gray-600 mb-4">
+                    <p className="text-gray-600 dark:text-neutral-400 mb-4">
                       I&apos;m a passionate self-taught developer 💻 committed to
                       honing my skills and creating impactful software. While my
                       heart lies in tech, I also embrace my artistic side 🎨
@@ -197,7 +197,7 @@ export default function EnhancedAboutPage() {
                   )}
                   {activeSection === "whyTechnology" && (
                     <>
-                      <p className="text-gray-600 mb-4">
+                      <p className="text-gray-600 dark:text-neutral-400 mb-4">
                         As a child, I was always fascinated by technology. I
                         eagerly explored various tools and gadgets, which
                         ignited my curiosity and sparked a desire to learn. From
@@ -205,7 +205,7 @@ export default function EnhancedAboutPage() {
                         every experience deepened my understanding of how
                         technology shapes our lives.
                       </p>
-                      <p className="text-gray-600 mb-4">
+                      <p className="text-gray-600 dark:text-neutral-400 mb-4">
                         The thrill of discovering new advancements and how they
                         can solve real-world problems has always captivated me.
                         I find joy in breaking down complex concepts and
@@ -215,7 +215,7 @@ export default function EnhancedAboutPage() {
                   )}
                   {activeSection === "artAndTech" && (
                     <>
-                      <p className="text-gray-600 mb-4">
+                      <p className="text-gray-600 dark:text-neutral-400 mb-4">
                         Absolutely not! I still take on commission work because
                         I believe that art plays a crucial role in my life.
                         Spending long hours in front of the computer can be
@@ -223,7 +223,7 @@ export default function EnhancedAboutPage() {
                         sketching allows me to recharge my mind and unleash my
                         imagination.
                       </p>
-                      <p className="text-gray-600 mb-4">
+                      <p className="text-gray-600 dark:text-neutral-400 mb-4">
                         Balancing my work as a front-end developer with my
                         passion for art not only keeps me motivated but also
                         enhances my creativity in both fields.
@@ -232,7 +232,7 @@ export default function EnhancedAboutPage() {
                   )}
                   {activeSection === "strengthsWeaknesses" && (
                     <>
-                      <p className="text-gray-600 mb-4">
+                      <p className="text-gray-600 dark:text-neutral-400 mb-4">
                         One of my key strengths is my educational background; I
                         hold a Bachelor&lsquo;s degree in Business Studies, which
                         equips me with valuable insights into optimizing
@@ -240,7 +240,7 @@ export default function EnhancedAboutPage() {
                         my ability to create visually appealing and creative
                         websites.
                       </p>
-                      <p className="text-gray-600 mb-4">
+                      <p className="text-gray-600 dark:text-neutral-400 mb-4">
                         However, I also recognize my weaknesses. Mathematics is
                         a challenging area for me, which sometimes requires
                         additional time and effort when solving complex
@@ -270,7 +270,7 @@ export default function EnhancedAboutPage() {
                 </motion.a>
                 <motion.a
                   href={GITHUB_ACCOUNT}
-                  className="text-gray-800 hover:text-gray-900"
+                  className="text-gray-800 hover:text-gray-900 dark:text-neutral-200 dark:hover:text-white"
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
                 >
@@ -293,21 +293,21 @@ export default function EnhancedAboutPage() {
         </div>
 
         <AnimatedSection>
-          <h2 className="text-3xl font-bold text-center mb-12">
-            Education Journey
+          <h2 className="mb-12 text-center text-4xl font-medium tracking-tight md:text-5xl">
+            Education
           </h2>
         </AnimatedSection>
 
         <RoadMap>
           {educationData?.map((edu, index) => (
             <RoadNode key={index} isLeft={index % 2 === 0}>
-              <div className="bg-white p-6 rounded-lg shadow-md max-w-md mx-auto">
+              <div className="mx-auto max-w-md border border-[#1c1915]/10 bg-[#f6f3ec] p-6 dark:border-white/10 dark:bg-[#1c1c1c]">
                 <div className="flex flex-col mb-4">
                   <h3 className="text-xl font-semibold">{edu.degree}</h3>
                   <span className="text-gray-500">{edu.year}</span>
                 </div>
-                <p className="text-gray-600 mb-2">{edu.institution}</p>
-                <p className="text-gray-700">{edu.description}</p>
+                <p className="text-gray-600 dark:text-neutral-400 mb-2">{edu.institution}</p>
+                <p className="text-gray-700 dark:text-neutral-300">{edu.description}</p>
                 {edu.location && (
                   <p className="text-gray-500 mt-2">{edu.location}</p>
                 )}
@@ -319,13 +319,13 @@ export default function EnhancedAboutPage() {
         <AnimatedSection>
           <div className="mt-16 text-center">
             <h2 className="text-2xl font-bold mb-4">Let&apos;s Connect!</h2>
-            <p className="text-gray-600 mb-4">
+            <p className="text-gray-600 dark:text-neutral-400 mb-4">
               I&apos;m always open to new opportunities and collaborations. Feel
               free to reach out!
             </p>
             <a
               href="mailto:rzprakash16@gmail.com"
-              className="inline-block  bg-slate-900 text-white px-6 py-3 rounded-full font-semibold  transition duration-300"
+              className="inline-block rounded-full bg-slate-900 px-6 py-3 font-semibold text-white transition duration-300 dark:bg-white dark:text-neutral-950"
             >
               Contact Me
             </a>
