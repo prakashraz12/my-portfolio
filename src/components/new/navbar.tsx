@@ -29,7 +29,7 @@ export function Navbar() {
     <header className="relative mx-auto w-full max-w-5xl px-6 pt-4">
       <nav
         className={`relative flex max-w-xl items-center justify-between ${
-          pathname === "/" ? "mx-auto" : ""
+          pathname === "/" || pathname.startsWith("/blog/") ? "mx-auto" : ""
         }`}
       >
         <p className="flex items-center gap-1 text-sm text-neutral-500 dark:text-neutral-400">

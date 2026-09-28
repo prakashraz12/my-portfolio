@@ -10,7 +10,7 @@ import { ChromaticImage } from "@/components/ui/chromatic-image";
 import blacktechLogo from "@/assets/logo/blacktech.png";
 import cueposLogo from "@/assets/logo/cuepos.svg";
 import viewLogo from "@/assets/logo/view.svg";
-import BG from "@/assets/images/bg.png";
+import BG from "@/assets/images/bg.webp";
 
 export function BackgroundBeamsDemo() {
   const [copied, setCopied] = useState(false);
@@ -82,7 +82,7 @@ export function BackgroundBeamsDemo() {
           
         </div>
 
-        <h1 className="mt-4 flex items-center gap-1 text-lg font-semibold tracking-tight">
+        <h1 className="mt-4 flex items-center gap-1 text-xl font-semibold tracking-tight">
           Prakash Raz Shrestha
           <BadgeCheck
             size={16}
@@ -92,9 +92,9 @@ export function BackgroundBeamsDemo() {
           />
         </h1>
 
-        <div className="mt-2 space-y-4 text-[15px] leading-7 text-neutral-900 dark:text-neutral-100">
+        <div className="mt-2 space-y-4 text-[16px] leading-7 text-neutral-900 dark:text-neutral-100">
           <p>
-            I&apos;m a <SquigglyText>frontend developer</SquigglyText> at ❤️ heart, tinkering with interfaces
+            I&apos;m a <SquigglyText>Frontend developer</SquigglyText> at <span className="animate-pulse">❤️</span> heart, tinkering with interfaces
             and product code most of the time. I work at{" "}
             <LinkPreview
               url="https://www.blacktech.com.np/"

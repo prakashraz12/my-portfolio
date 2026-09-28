@@ -83,9 +83,13 @@ export default function CommentForm({
   return (
     <div className="w-full mx-auto">
       <div className="mb-6">
-        <h2 className="text-2xl font-bold tracking-tight">Leave a Comment</h2>
-        <p className="text-muted-foreground mt-1">
-          Share your thoughts about this {collectionName === "blogs" ? "article." :"project, that will help to improve."}
+        <h2 className="text-[11px] font-semibold uppercase tracking-[0.16em] text-neutral-500">
+          Leave a comment
+        </h2>
+        <p className="mt-2 text-sm text-neutral-500">
+          {collectionName === "blogs"
+            ? "A note on this piece."
+            : "A note on this project."}
         </p>
       </div>
 

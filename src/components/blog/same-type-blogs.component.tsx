@@ -1,89 +1,79 @@
-import useCategories from "@/hooks/use-category-provide";
 import { BlogPost } from "@/lib/types/types";
-import { db, formatTimestamp } from "@/lib/utils";
+import { db } from "@/lib/utils";
 import { collection, getDocs, limit, query, where } from "firebase/firestore";
-import { ZapIcon } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
-import BlogLoadingComponents from "./blog-loading-animation.component";
+import { useEffect, useState } from "react";
 
-const SameTypeBlogs = ({ categoryId }: { categoryId: string }) => {
+const formatDate = (createdAt?: { seconds?: number }) => {
+  if (!createdAt?.seconds) return "";
+  return new Date(createdAt.seconds * 1000).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+};
+
+const SameTypeBlogs = ({
+  categoryId,
+  excludeSlug,
+}: {
+  categoryId: string;
+  excludeSlug?: string;
+}) => {
   const [blogs, setBlogs] = useState<BlogPost[]>([]);
-  const [loading, setLoading] = useState(true);
-  const { categories } = useCategories();
-  useEffect(() => {
-    async function fetchBlogs() {
-      setLoading(true);
-      try {
-        const q = query(
-          collection(db, "blogs"),
-          where("category", "==", categoryId),
-          limit(4)
-        );
-        const querySnapshot = await getDocs(q);
-        const blogsData = querySnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        })) as BlogPost[];
-        setBlogs(blogsData);
-      } catch (error) {
-        console.error("Error fetching blogs: ", error);
-      } finally {
-        setLoading(false);
-      }
-    }
 
-    if (categoryId) {
-      fetchBlogs();
-    }
-  }, [categoryId]);
-  const getCategoryName = (id: string) => {
-    return categories?.map((i) => (i.id === id ? i.title : ""));
-  };
+  useEffect(() => {
+    if (!categoryId) return;
+    let cancelled = false;
+
+    (async () => {
+      try {
+        const snap = await getDocs(
+          query(
+            collection(db, "blogs"),
+            where("category", "==", categoryId),
+            limit(5)
+          )
+        );
+        if (cancelled) return;
+        setBlogs(
+          snap.docs
+            .map((doc) => ({ id: doc.id, ...doc.data() }) as BlogPost)
+            .filter((post) => post.slug && post.slug !== excludeSlug)
+            .slice(0, 4)
+        );
+      } catch {
+        if (!cancelled) setBlogs([]);
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [categoryId, excludeSlug]);
+
+  if (blogs.length === 0) return null;
+
   return (
-    <>
-      <h1 className="text-2xl font-bold">Similar Blogs</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2  gap-4 mt-2 mb-5">
-        {loading &&
-          Array.from({ length: 4 }).map((_, index) => (
-            <BlogLoadingComponents key={index} />
-          ))}
-        {blogs?.map((post, index) => (
+    <section className="mt-14">
+      <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-neutral-500">
+        More writing
+      </p>
+      <div className="mt-3">
+        {blogs.map((post) => (
           <Link
-            key={index}
-            href={`/blog/${post?.slug}`}
-            className="relative group aspect-[4/3] overflow-hidden "
+            key={post.slug}
+            href={`/blog/${post.slug}`}
+            className="flex items-baseline justify-between gap-4 border-t border-neutral-200 py-3 first:border-t-0 dark:border-white/10"
           >
-            <Image
-              src={post.bannerImageUrl}
-              alt={post.title}
-              className="object-cover group-hover:scale-105 transition-transform duration-300"
-              fill
-            />
-            <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-black/60" />
-            <div className="absolute top-4 left-4 right-4 flex justify-between items-start">
-              {post?.category && (
-                <span className="bg-black/80 text-white px-3 py-1 text-sm font-medium rounded">
-                  {getCategoryName(post?.category)}
-                </span>
-              )}
-              <ZapIcon className="text-red-500 w-6 h-6" />
-            </div>
-            <div className="absolute bottom-4 left-4 right-4 text-white">
-              <div className="flex items-center gap-2 text-sm mb-2">
-                <span>•</span>
-                <span>{formatTimestamp(post?.createdAt)}</span>
-              </div>
-              <h2 className="text-sm font-bold mb-2 line-clamp-2">
-                {post.title}
-              </h2>
-              <p className="line-clamp-2">{post?.shortDescription}</p>
-            </div>
+            <span className="min-w-0 text-[15px] font-medium">{post.title}</span>
+            <span className="shrink-0 text-[11px] uppercase tracking-[0.06em] text-neutral-400">
+              {formatDate(post.createdAt)}
+            </span>
           </Link>
         ))}
       </div>
-    </>
+    </section>
   );
 };
 

@@ -44,14 +44,16 @@ export default function CommentView({
   //   };
   return (
     <>
-      <h1 className="text-2xl font-bold">Comments</h1>
+      <h2 className="text-[11px] font-semibold uppercase tracking-[0.16em] text-neutral-500">
+        Comments
+      </h2>
       {loading && (
         <div className="flex justify-center">
           <LoaderCircle className="animate-spin" />
         </div>
       )}
       {comments.length === 0 ? (
-        <p className="text-center text-muted-foreground">No comments yet.</p>
+        <p className="mt-3 text-sm text-neutral-500">No comments yet.</p>
       ) : (
         comments.map((comment) => (
           <div key={comment.id} className="mt-4">
@@ -62,11 +64,8 @@ export default function CommentView({
                 </AvatarFallback>
               </Avatar>
               <div>
-                <h6 className="font-semibold">{comment.fullName}</h6>
-                <span className="text-sm text-muted-foreground">
-                  {comment.email}
-                </span>
-                <p className="text-sm text-muted-foreground">
+                <h3 className="text-sm font-semibold">{comment.fullName}</h3>
+                <p className="text-sm text-neutral-600 dark:text-neutral-300">
                   {comment.comment}
                 </p>
               </div>
